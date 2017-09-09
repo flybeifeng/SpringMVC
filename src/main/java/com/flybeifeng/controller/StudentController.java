@@ -3,10 +3,8 @@ package com.flybeifeng.controller;
 import com.flybeifeng.service.StudentService;
 import com.flybeifeng.bean.Student;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -29,6 +27,45 @@ public class StudentController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody Student getStudentById(@PathVariable int id) {
+        System.out.println("id = " + id);
         return studentService.getStudentById(id);
+    }
+
+    @RequestMapping(value = "/put", method = RequestMethod.GET)
+    public ModelAndView addStudentById(Model model,
+                                       @RequestParam(value = "id") int id,
+                                       @RequestParam(value = "name", required = false, defaultValue = "0") String name,
+                                       @RequestParam(value = "age") int age,
+                                       @RequestParam(value = "sex") boolean sex) {
+        System.out.println("id = " + id);
+        studentService.addStudentById(id, name, age, sex);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("value", "haha");
+        modelAndView.setViewName("/page/success.html");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public ModelAndView deleteStudentById(@RequestParam(value = "id") int id) {
+        System.out.println("id = " + id);
+        studentService.deleteStudentById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("value", "haha");
+        modelAndView.setViewName("/page/success.html");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public ModelAndView updateStudentById(@RequestParam(value = "id") int id,
+                                          @RequestParam(value = "age") int age) {
+        System.out.println("id = " + id);
+        studentService.updateStudentById(id, age);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("value", "haha");
+        modelAndView.setViewName("/page/success.html");
+        return modelAndView;
     }
 }

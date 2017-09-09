@@ -1,4 +1,4 @@
-package com.flybeifeng.controller;
+package com.flybeifeng.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;

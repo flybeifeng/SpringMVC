@@ -3,6 +3,7 @@ package com.flybeifeng.service;
 import com.flybeifeng.bean.Student;
 import com.flybeifeng.dao.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,9 @@ public class StudentService {
 
     @Autowired
     private StudentDao dao;
+
+//    @Autowired
+//    private JdbcTemplate dao;
 
     public List<Student> getAllStudent() {
         return dao.findAll();

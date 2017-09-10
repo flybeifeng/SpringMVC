@@ -1,5 +1,7 @@
 package com.flybeifeng.controller;
 
+import com.flybeifeng.annotation.SystemControllerLog;
+import com.flybeifeng.annotation.SystemServiceLog;
 import com.flybeifeng.service.StudentService;
 import com.flybeifeng.bean.Student;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ public class StudentController {
 
 
     @RequestMapping(value = "/getAllStudent", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询所有用户")
     public ModelAndView getAllStudent() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/WEB-INF/views/studentDisplay.jsp");
@@ -26,18 +29,18 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @SystemControllerLog(description = "通过id查询用户")
+    @SystemServiceLog(description = "通过id查询用户")
     public @ResponseBody Student getStudentById(@PathVariable int id) {
-        System.out.println("id = " + id);
         return studentService.getStudentById(id);
     }
 
     @RequestMapping(value = "/put", method = RequestMethod.GET)
-    public ModelAndView addStudentById(Model model,
-                                       @RequestParam(value = "id") int id,
+    @SystemControllerLog(description = "新增用户")
+    public ModelAndView addStudentById(@RequestParam(value = "id") int id,
                                        @RequestParam(value = "name", required = false, defaultValue = "0") String name,
                                        @RequestParam(value = "age") int age,
                                        @RequestParam(value = "sex") boolean sex) {
-        System.out.println("id = " + id);
         studentService.addStudentById(id, name, age, sex);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -47,8 +50,9 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @SystemControllerLog(description = "删除用户")
     public ModelAndView deleteStudentById(@RequestParam(value = "id") int id) {
-        System.out.println("id = " + id);
+
         studentService.deleteStudentById(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -58,9 +62,9 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @SystemControllerLog(description = "修改用户年龄")
     public ModelAndView updateStudentById(@RequestParam(value = "id") int id,
                                           @RequestParam(value = "age") int age) {
-        System.out.println("id = " + id);
         studentService.updateStudentById(id, age);
 
         ModelAndView modelAndView = new ModelAndView();
